@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400&display=swap');
+
+:root {
+  --bg: #f5f4f0;
+  --sidebar-bg: #1a1a1a;
+  --sidebar-text: #c8c8c0;
+  --sidebar-hover: #ffffff;
+  --sidebar-active: #e8e060;
+  --sidebar-width: 220px;
+  --text: #1a1a1a;
+  --muted: #888;
+  --border: #ddddd8;
+  --card-bg: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── SIDEBAR ── */
+nav {
+  width: var(--sidebar-width);
+  background: var(--sidebar-bg);
+  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem 0;
+}
+
+nav .site-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--sidebar-active);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0 1.8rem 2.5rem;
+  border-bottom: 1px solid #2e2e2e;
+}
+
+nav ul {
+  list-style: none;
+  padding: 1.8rem 0;
+  flex: 1;
+}
+
+nav ul li a {
+  display: block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--sidebar-text);
+  text-decoration: none;
+  padding: 0.6rem 1.8rem;
+  letter-spacing: 0.05em;
+  transition: color 0.15s, padding-left 0.15s;
+}
+
+nav ul li a:hover {
+  color: var(--sidebar-hover);
+  padding-left: 2.2rem;
+}
+
+nav ul li a.active {
+  color: var(--sidebar-active);
+}
+
+nav .nav-footer {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  color: #444;
+  padding: 0 1.8rem;
+  letter-spacing: 0.05em;
+}
+
+/* ── MAIN CONTENT ── */
+main {
+  margin-left: var(--sidebar-width);
+  padding: 4rem 3.5rem;
+  flex: 1;
+  max-width: 860px;
+}
+
+/* ── INDEX CARD ── */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  padding: 2.8rem 3rem;
+  max-width: 520px;
+}
+
+.card h1 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.card p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #444;
+  font-weight: 300;
+}
+
+.card .tag {
+  display: inline-block;
+  margin-top: 1.6rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+  width: 100%;
+}
+
+/* ── CHATS PAGE ── */
+.page-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 2.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.photo-grid figure {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.photo-grid img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  filter: grayscale(15%);
+  transition: filter 0.2s;
+}
+
+.photo-grid img:hover {
+  filter: grayscale(0%);
+}
+
+.photo-grid figcaption {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+  padding: 0.6rem 0.8rem;
+  letter-spacing: 0.04em;
+}
