@@ -181,3 +181,50 @@ main {
   padding: 0.6rem 0.8rem;
   letter-spacing: 0.04em;
 }
+
+/* ── RECOMMANDATIONS ── */
+.reco-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.reco-card {
+  display: flex;
+  gap: 1.5rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  padding: 1.2rem;
+  align-items: flex-start;
+}
+
+.reco-card img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.reco-text h2 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+
+.reco-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--sidebar-active);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.reco-text p {
+  font-size: 0.85rem;
+  color: #555;
+  line-height: 1.6;
+  font-weight: 300;
+}
