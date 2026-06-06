@@ -5,7 +5,7 @@
   --sidebar-bg: #1a1a1a;
   --sidebar-text: #c8c8c0;
   --sidebar-hover: #ffffff;
-  --sidebar-active: #e8e060;
+  --sidebar-active: hsl(120, 61%, 34%);
   --sidebar-width: 220px;
   --text: #1a1a1a;
   --muted: #888;
