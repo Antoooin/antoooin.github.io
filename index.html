@@ -2,9 +2,114 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mon site</title>
+  <style>
+    body {
+      max-width: 600px;
+      margin: 80px auto;
+      padding: 0 20px;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      line-height: 1.6;
+      color: #1a1a1a;
+      background: #fafaf8;
+    }
+
+    a { color: #1a1a1a; }
+    a:hover { opacity: 0.6; }
+
+    nav {
+      margin-bottom: 60px;
+      font-size: 14px;
+    }
+
+    nav a {
+      margin-right: 16px;
+      text-decoration: none;
+      border-bottom: 1px solid currentColor;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 600;
+      margin: 0 0 6px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #888;
+      margin-bottom: 60px;
+    }
+
+    section {
+      margin-bottom: 48px;
+    }
+
+    h2 {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #888;
+      margin: 0 0 12px;
+    }
+
+    p {
+      margin: 0;
+      color: #333;
+    }
+
+    .link-block {
+      margin-top: 60px;
+      padding-top: 24px;
+      border-top: 1px solid #e0e0e0;
+      font-size: 15px;
+    }
+
+    .link-block a {
+      text-decoration: none;
+      border-bottom: 1px solid currentColor;
+    }
+
+    footer {
+      margin-top: 80px;
+      padding-top: 24px;
+      border-top: 1px solid #e0e0e0;
+      font-size: 13px;
+      color: #aaa;
+    }
+  </style>
 </head>
 <body>
-  <h1>Hello !</h1>
+
+  <nav>
+    <a href="index.html">accueil</a>
+    <a href="chats.html">les chats</a>
+  </nav>
+
+  <h1>Hello, moi c'est [Prénom]</h1>
+  <p class="subtitle">[ville] · [ce que tu fais]</p>
+
+  <section>
+    <h2>Moi</h2>
+    <p>
+      [Quelques lignes sur toi — qui tu es, ce qui t'intéresse, ce que tu fais de tes journées. Reste naturel, comme si tu l'expliquais à quelqu'un que tu viens de rencontrer.]
+    </p>
+  </section>
+
+  <section>
+    <h2>Ce site</h2>
+    <p>
+      Pas grand chose d'ambitieux : juste un endroit à moi sur internet. Pour écrire ce qui me passe par la tête, garder une trace de trucs, partager des petites choses — comme les chats de mes potes.
+    </p>
+  </section>
+
+  <div class="link-block">
+    → <a href="chats.html">Les chats des potes</a>
+  </div>
+
+  <footer>fait à la main</footer>
+
 </body>
 </html>

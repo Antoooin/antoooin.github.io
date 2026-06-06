@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Les chats — Mon site</title>
+  <style>
+    body {
+      max-width: 600px;
+      margin: 80px auto;
+      padding: 0 20px;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      line-height: 1.6;
+      color: #1a1a1a;
+      background: #fafaf8;
+    }
+
+    a { color: #1a1a1a; }
+    a:hover { opacity: 0.6; }
+
+    nav {
+      margin-bottom: 60px;
+      font-size: 14px;
+    }
+
+    nav a {
+      margin-right: 16px;
+      text-decoration: none;
+      border-bottom: 1px solid currentColor;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 600;
+      margin: 0 0 6px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #888;
+      margin-bottom: 60px;
+    }
+
+    /* Galerie */
+    .gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .cat-entry {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .cat-entry img {
+      width: 140px;
+      height: 140px;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(20%);
+    }
+
+    .cat-entry .no-photo {
+      width: 140px;
+      height: 140px;
+      background: #e8e8e4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: #aaa;
+    }
+
+    .cat-meta {
+      padding-top: 4px;
+    }
+
+    .cat-name {
+      font-size: 17px;
+      font-weight: 600;
+      margin: 0 0 2px;
+    }
+
+    .cat-owner {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 8px;
+    }
+
+    .cat-desc {
+      font-size: 15px;
+      color: #444;
+      margin: 0;
+    }
+
+    /* Ajout */
+    .add-section {
+      margin-top: 60px;
+      padding-top: 24px;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .add-section h2 {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #888;
+      margin: 0 0 20px;
+    }
+
+    .form-row {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 4px;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      border: 1px solid #d0d0cc;
+      background: #fff;
+      padding: 8px 10px;
+      font-family: inherit;
+      font-size: 15px;
+      color: #1a1a1a;
+      outline: none;
+      box-sizing: border-box;
+      border-radius: 0;
+      -webkit-appearance: none;
+    }
+
+    input[type="text"]:focus,
+    textarea:focus {
+      border-color: #1a1a1a;
+    }
+
+    textarea { resize: vertical; min-height: 72px; }
+
+    .file-label {
+      display: inline-block;
+      font-size: 13px;
+      border-bottom: 1px solid currentColor;
+      cursor: pointer;
+      color: #1a1a1a;
+    }
+
+    input[type="file"] { display: none; }
+
+    #preview {
+      margin-top: 10px;
+      display: none;
+    }
+
+    #preview img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+    }
+
+    button[type="submit"] {
+      margin-top: 20px;
+      background: #1a1a1a;
+      color: #fafaf8;
+      border: none;
+      padding: 10px 24px;
+      font-family: inherit;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    button[type="submit"]:hover { opacity: 0.75; }
+
+    footer {
+      margin-top: 80px;
+      padding-top: 24px;
+      border-top: 1px solid #e0e0e0;
+      font-size: 13px;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">accueil</a>
+    <a href="chats.html">les chats</a>
+  </nav>
+
+  <h1>Les chats des potes</h1>
+  <p class="subtitle">Parce qu'ils le méritent.</p>
+
+  <div class="gallery" id="gallery">
+
+    <div class="cat-entry">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Cat_November_2010-1a.jpg/1200px-Cat_November_2010-1a.jpg" alt="Moustache">
+      <div class="cat-meta">
+        <div class="cat-name">Moustache</div>
+        <div class="cat-owner">chat de Léa</div>
+        <p class="cat-desc">Dort 20h par jour. Réclame à manger les 4 heures restantes.</p>
+      </div>
+    </div>
+
+    <div class="cat-entry">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Kittyply_edit1.jpg/1200px-Kittyply_edit1.jpg" alt="Pixel">
+      <div class="cat-meta">
+        <div class="cat-name">Pixel</div>
+        <div class="cat-owner">chat de Tom</div>
+        <p class="cat-desc">Mord sans prévenir mais fait des câlins juste après.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="add-section">
+    <h2>Ajouter un chat</h2>
+
+    <div class="form-row">
+      <label for="f-name">Nom</label>
+      <input type="text" id="f-name" placeholder="Moustache">
+    </div>
+
+    <div class="form-row">
+      <label for="f-owner">Propriétaire</label>
+      <input type="text" id="f-owner" placeholder="chat de Léa">
+    </div>
+
+    <div class="form-row">
+      <label for="f-desc">Description</label>
+      <textarea id="f-desc" placeholder="Une anecdote..."></textarea>
+    </div>
+
+    <div class="form-row">
+      <label>Photo</label>
+      <label class="file-label" for="f-photo">choisir un fichier</label>
+      <input type="file" id="f-photo" accept="image/*">
+      <div id="preview"><img id="preview-img" src="" alt="aperçu"></div>
+    </div>
+
+    <button type="submit" onclick="addCat()">Ajouter</button>
+  </div>
+
+  <footer>fait à la main</footer>
+
+  <script>
+    let imgSrc = null;
+
+    document.getElementById('f-photo').addEventListener('change', function() {
+      const file = this.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        imgSrc = e.target.result;
+        document.getElementById('preview-img').src = imgSrc;
+        document.getElementById('preview').style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    });
+
+    function addCat() {
+      const name = document.getElementById('f-name').value.trim();
+      const owner = document.getElementById('f-owner').value.trim();
+      const desc = document.getElementById('f-desc').value.trim();
+      if (!name) { alert('Un nom au moins !'); return; }
+
+      const entry = document.createElement('div');
+      entry.className = 'cat-entry';
+
+      const photoHTML = imgSrc
+        ? `<img src="${imgSrc}" alt="${name}">`
+        : `<div class="no-photo">pas de photo</div>`;
+
+      entry.innerHTML = `
+        ${photoHTML}
+        <div class="cat-meta">
+          <div class="cat-name">${name}</div>
+          ${owner ? `<div class="cat-owner">${owner}</div>` : ''}
+          ${desc ? `<p class="cat-desc">${desc}</p>` : ''}
+        </div>
+      `;
+
+      document.getElementById('gallery').appendChild(entry);
+
+      // reset
+      document.getElementById('f-name').value = '';
+      document.getElementById('f-owner').value = '';
+      document.getElementById('f-desc').value = '';
+      document.getElementById('f-photo').value = '';
+      document.getElementById('preview').style.display = 'none';
+      imgSrc = null;
+    }
+  </script>
+
+</body>
+</html>
