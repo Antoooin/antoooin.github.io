@@ -140,6 +140,15 @@ main {
   border-bottom: 1px solid var(--border);
 }
 
+.page-subtitle {
+  display: block;
+  font-size: 0.7rem;
+  color: #bbb;
+  margin-top: 0.3rem;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
 .photo-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
