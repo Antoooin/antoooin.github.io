@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Particules</title>
+  <link rel="stylesheet" href="../../style.css">
+  <style>
+    /* ── SIMULATION PAGE SPECIFIC ── */
+    .sim-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .sim-header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .sim-header h1 {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .sim-header p {
+      font-size: 0.82rem;
+      color: #666;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    /* ── CONTROLS ── */
+    .controls {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1.6rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem 1.5rem;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .control-group label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .control-group input,
+    .control-group select {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.78rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.4rem 0.6rem;
+      width: 100%;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .control-group input:focus,
+    .control-group select:focus {
+      border-color: #aaa;
+    }
+
+    .controls-footer {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    #run-btn {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: var(--sidebar-bg);
+      color: var(--sidebar-active);
+      border: none;
+      padding: 0.55rem 1.4rem;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    #run-btn:hover { background: #2e2e2e; }
+    #run-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    #status {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    /* ── LJ PARAMS (shown/hidden) ── */
+    .lj-params { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem 1.5rem; }
+    .lj-params.hidden { display: none; }
+
+    /* ── RESULTS ── */
+    .results { display: none; flex-direction: column; gap: 1.5rem; }
+    .results.visible { display: flex; }
+
+    .plots-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .plot-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1rem;
+    }
+
+    .plot-card h2 {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 0.8rem;
+    }
+
+    .plot-card canvas {
+      width: 100%;
+      display: block;
+    }
+
+    /* Animation card spans full width */
+    .plot-card.anim-card {
+      grid-column: 1 / -1;
+    }
+
+    .anim-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-top: 0.6rem;
+    }
+
+    .anim-controls button {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: var(--sidebar-bg);
+      color: var(--sidebar-text);
+      border: none;
+      padding: 0.3rem 0.8rem;
+      cursor: pointer;
+    }
+
+    .anim-controls button:hover { color: #fff; }
+
+    #frame-counter {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+    }
+
+    #anim-canvas {
+      background: #0d0d0d;
+      border: 1px solid #2a2a2a;
+    }
+
+    @media (max-width: 700px) {
+      .plots-grid { grid-template-columns: 1fr; }
+      .plot-card.anim-card { grid-column: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="site-title">antoooin</div>
+    <ul>
+      <li><a href="../../index.html">Accueil</a></li>
+      <li><a href="../../chats.html">Des ptits chats</a></li>
+      <li><a href="../../recommandations.html">Recommandations</a></li>
+      <li><a href="index.html" class="active">MD2D</a></li>
+    </ul>
+    <div class="nav-footer">antoooin.github.io</div>
+  </nav>
+
+  <main>
+    <div class="sim-layout">
+
+      <div class="sim-header">
+        <h1>Dynamique moléculaire 2D</h1>
+        <p>N particules en interaction dans une boîte carrée avec conditions aux limites périodiques.<br>
+        Potentiel de Lennard-Jones tronqué, intégrateur Velocity Verlet.</p>
+      </div>
+
+      <!-- CONTROLS -->
+      <div class="controls">
+        <div class="control-group">
+          <label>N particules</label>
+          <input type="number" id="p-N" value="100" min="10" max="400">
+        </div>
+        <div class="control-group">
+          <label>Taille boîte</label>
+          <input type="number" id="p-box" value="20" min="5" max="50" step="1">
+        </div>
+        <div class="control-group">
+          <label>Pas de temps dt</label>
+          <input type="number" id="p-dt" value="0.0005" min="0.0001" max="0.001" step="0.0001">
+        </div>
+        <div class="control-group">
+          <label>Nombre de steps</label>
+          <input type="number" id="p-steps" value="5000" min="500" max="20000" step="500">
+        </div>
+        <div class="control-group">
+          <label>Vitesse initiale max</label>
+          <input type="number" id="p-vel" value="0.3" min="0.1" max="2.0" step="0.1">
+        </div>
+        <div class="control-group">
+          <label>Potentiel</label>
+          <select id="p-potential">
+            <option value="1">Lennard-Jones</option>
+            <option value="0">Gaz parfait</option>
+          </select>
+        </div>
+
+        <!-- LJ params -->
+        <div class="lj-params" id="lj-params">
+          <div class="control-group">
+            <label>ε (epsilon)</label>
+            <input type="number" id="p-eps" value="1.0" min="0.1" max="5.0" step="0.1">
+          </div>
+          <div class="control-group">
+            <label>σ (sigma)</label>
+            <input type="number" id="p-sig" value="1.0" min="0.5" max="2.0" step="0.1">
+          </div>
+          <div class="control-group">
+            <label>Cutoff</label>
+            <input type="number" id="p-cut" value="2.5" min="1.5" max="5.0" step="0.1">
+          </div>
+        </div>
+
+        <div class="controls-footer">
+          <button id="run-btn">Lancer</button>
+          <span id="status">prêt</span>
+        </div>
+      </div>
+
+      <!-- RESULTS -->
+      <div class="results" id="results">
+
+        <!-- Animation -->
+        <div class="plot-card anim-card">
+          <h2>Positions des particules</h2>
+          <canvas id="anim-canvas" width="800" height="400"></canvas>
+          <div class="anim-controls">
+            <button id="btn-play">Pause</button>
+            <button id="btn-restart">↺ Restart</button>
+            <span id="frame-counter">frame 0 / 0</span>
+          </div>
+        </div>
+
+        <div class="plots-grid">
+          <!-- Énergie -->
+          <div class="plot-card">
+            <h2>Énergie</h2>
+            <canvas id="energy-canvas" width="400" height="220"></canvas>
+          </div>
+
+          <!-- RDF -->
+          <div class="plot-card">
+            <h2>RDF — g(r)</h2>
+            <canvas id="rdf-canvas" width="400" height="220"></canvas>
+          </div>
+
+          <!-- Distribution des vitesses -->
+          <div class="plot-card">
+            <h2>Distribution des vitesses</h2>
+            <canvas id="speed-canvas" width="400" height="220"></canvas>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="sim.js"></script>
+  <script>
+  // ── Helpers ──────────────────────────────────────────────────────────────
+  const $ = id => document.getElementById(id);
+
+  // Show/hide LJ params
+  $('p-potential').addEventListener('change', () => {
+    const lj = $('lj-params');
+    lj.classList.toggle('hidden', $('p-potential').value === '0');
+  });
+
+  // ── Colors ───────────────────────────────────────────────────────────────
+  const C = {
+    bg:      '#0d0d0d',
+    particle:'#e8e060',
+    ek:      '#e8e060',
+    ep:      '#6090e0',
+    etot:    '#e0e0e0',
+    rdf:     '#e8e060',
+    speed:   '#6090e0',
+    grid:    '#1e1e1e',
+    axis:    '#444',
+    text:    '#888',
+  };
+
+  // ── Canvas plot helpers ───────────────────────────────────────────────────
+  function clearCanvas(ctx, w, h) {
+    ctx.fillStyle = '#fafaf8';
+    ctx.fillRect(0, 0, w, h);
+  }
+
+  function drawGrid(ctx, x0, y0, w, h, nx, ny) {
+    ctx.strokeStyle = '#e8e8e4';
+    ctx.lineWidth = 0.5;
+    for(let i = 0; i <= nx; i++) {
+      const x = x0 + i * w / nx;
+      ctx.beginPath(); ctx.moveTo(x, y0); ctx.lineTo(x, y0 + h); ctx.stroke();
+    }
+    for(let i = 0; i <= ny; i++) {
+      const y = y0 + i * h / ny;
+      ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x0 + w, y); ctx.stroke();
+    }
+  }
+
+  function axisLabel(ctx, text, x, y, align='center') {
+    ctx.font = '10px IBM Plex Mono, monospace';
+    ctx.fillStyle = '#999';
+    ctx.textAlign = align;
+    ctx.fillText(text, x, y);
+  }
+
+  // ── Plot: energy ─────────────────────────────────────────────────────────
+  function plotEnergy(energies) {
+    const canvas = $('energy-canvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    const pad = { top: 20, right: 20, bottom: 30, left: 55 };
+    const w = W - pad.left - pad.right;
+    const h = H - pad.top - pad.bottom;
+
+    clearCanvas(ctx, W, H);
+    drawGrid(ctx, pad.left, pad.top, w, h, 5, 4);
+
+    // Décimer pour la perf (max 500 points)
+    const stride = Math.max(1, Math.floor(energies.length / 500));
+    const dec = energies.filter((_, i) => i % stride === 0);
+
+    const steps = dec.map(e => e[0]);
+    const Eks   = dec.map(e => e[1]);
+    const Eps   = dec.map(e => e[2]);
+    const Etots = dec.map(e => e[3]);
+
+    const allVals = [...Eks, ...Eps, ...Etots];
+    const yMin = Math.min(...allVals);
+    const yMax = Math.max(...allVals);
+    const yRange = yMax - yMin || 1;
+    const xMin = steps[0], xMax = steps[steps.length - 1];
+
+    function mapX(s) { return pad.left + (s - xMin) / (xMax - xMin) * w; }
+    function mapY(v) { return pad.top + h - (v - yMin) / yRange * h; }
+
+    function drawLine(vals, color) {
+      ctx.beginPath();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 1.2;
+      vals.forEach((v, i) => {
+        const x = mapX(steps[i]), y = mapY(v);
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+    }
+
+    drawLine(Eps,   '#6090e0');
+    drawLine(Eks,   '#e8e060');
+    drawLine(Etots, '#ccc');
+
+    // Axes labels
+    ctx.font = '9px IBM Plex Mono, monospace';
+    ctx.fillStyle = '#999';
+    ctx.textAlign = 'right';
+    [yMin, (yMin+yMax)/2, yMax].forEach(v => {
+      ctx.fillText(v.toFixed(1), pad.left - 4, mapY(v) + 3);
+    });
+    ctx.textAlign = 'center';
+    [xMin, Math.round((xMin+xMax)/2), xMax].forEach(s => {
+      ctx.fillText(s, mapX(s), pad.top + h + 18);
+    });
+
+    // Légende
+    const items = [['Ek','#e8e060'],['Ep','#6090e0'],['Etot','#ccc']];
+    items.forEach(([label, color], i) => {
+      ctx.fillStyle = color;
+      ctx.fillRect(pad.left + i * 60, pad.top - 14, 10, 2);
+      ctx.fillStyle = '#999';
+      ctx.textAlign = 'left';
+      ctx.fillText(label, pad.left + i * 60 + 14, pad.top - 10);
+    });
+  }
+
+  // ── Plot: RDF ─────────────────────────────────────────────────────────────
+  function plotRDF(rdf) {
+    const canvas = $('rdf-canvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    const pad = { top: 20, right: 20, bottom: 30, left: 45 };
+    const w = W - pad.left - pad.right;
+    const h = H - pad.top - pad.bottom;
+
+    clearCanvas(ctx, W, H);
+    drawGrid(ctx, pad.left, pad.top, w, h, 5, 4);
+
+    const rs  = rdf.r;
+    const grs = rdf.gr;
+    const xMin = rs[0], xMax = rs[rs.length - 1];
+    const yMax = Math.min(Math.max(...grs) * 1.1, 10);
+
+    function mapX(r) { return pad.left + (r - xMin) / (xMax - xMin) * w; }
+    function mapY(v) { return pad.top + h - Math.min(v, yMax) / yMax * h; }
+
+    // g(r) = 1 reference line
+    ctx.strokeStyle = '#ccc';
+    ctx.setLineDash([4, 4]);
+    ctx.lineWidth = 0.8;
+    ctx.beginPath();
+    ctx.moveTo(pad.left, mapY(1)); ctx.lineTo(pad.left + w, mapY(1));
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    ctx.beginPath();
+    ctx.strokeStyle = '#e8e060';
+    ctx.lineWidth = 1.5;
+    rs.forEach((r, i) => {
+      const x = mapX(r), y = mapY(grs[i]);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+
+    ctx.font = '9px IBM Plex Mono, monospace';
+    ctx.fillStyle = '#999';
+    ctx.textAlign = 'right';
+    [0, yMax/2, yMax].forEach(v => {
+      ctx.fillText(v.toFixed(1), pad.left - 4, mapY(v) + 3);
+    });
+    ctx.textAlign = 'center';
+    [xMin, (xMin+xMax)/2, xMax].forEach(r => {
+      ctx.fillText(r.toFixed(1), mapX(r), pad.top + h + 18);
+    });
+    axisLabel(ctx, 'r', pad.left + w / 2, H - 2);
+    axisLabel(ctx, '-- g(r)=1', pad.left + w - 20, mapY(1) - 5, 'right');
+  }
+
+  // ── Plot: speed distribution ───────────────────────────────────────────
+  function plotSpeeds(speeds) {
+    const canvas = $('speed-canvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    const pad = { top: 20, right: 20, bottom: 30, left: 45 };
+    const w = W - pad.left - pad.right;
+    const h = H - pad.top - pad.bottom;
+
+    clearCanvas(ctx, W, H);
+    drawGrid(ctx, pad.left, pad.top, w, h, 5, 4);
+
+    const bins = 30;
+    const vMax = Math.max(...speeds);
+    const dv   = vMax / bins;
+    const hist = new Array(bins).fill(0);
+    speeds.forEach(v => {
+      const b = Math.min(Math.floor(v / dv), bins - 1);
+      hist[b]++;
+    });
+    const maxCount = Math.max(...hist);
+    const barW = w / bins;
+
+    hist.forEach((count, i) => {
+      const x = pad.left + i * barW;
+      const bh = (count / maxCount) * h;
+      ctx.fillStyle = '#6090e0';
+      ctx.fillRect(x + 0.5, pad.top + h - bh, barW - 1, bh);
+    });
+
+    ctx.font = '9px IBM Plex Mono, monospace';
+    ctx.fillStyle = '#999';
+    ctx.textAlign = 'center';
+    [0, vMax / 2, vMax].forEach(v => {
+      ctx.fillText(v.toFixed(2), pad.left + (v / vMax) * w, pad.top + h + 18);
+    });
+    axisLabel(ctx, '|v|', pad.left + w / 2, H - 2);
+  }
+
+  // ── Animation ────────────────────────────────────────────────────────────
+  let animFrames = [];
+  let animIdx    = 0;
+  let animTimer  = null;
+  let animBox    = 20;
+  let playing    = true;
+
+  function drawFrame(frameData) {
+    const canvas = $('anim-canvas');
+    const ctx    = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+
+    ctx.fillStyle = '#0d0d0d';
+    ctx.fillRect(0, 0, W, H);
+
+    // Grille
+    ctx.strokeStyle = '#1a1a1a';
+    ctx.lineWidth = 0.5;
+    for(let i = 0; i <= 10; i++) {
+      const x = i / 10 * W, y = i / 10 * H;
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+    }
+
+    const N = frameData.length / 2;
+    const r = Math.max(2, Math.min(4, 300 / N));
+
+    for(let i = 0; i < N; i++) {
+      const px = (frameData[i * 2]     / animBox) * W;
+      const py = (frameData[i * 2 + 1] / animBox) * H;
+      ctx.beginPath();
+      ctx.arc(px, py, r, 0, Math.PI * 2);
+      ctx.fillStyle = '#e8e060';
+      ctx.fill();
+    }
+
+    $('frame-counter').textContent = `frame ${animIdx + 1} / ${animFrames.length}`;
+  }
+
+  function animStep() {
+    if(!playing) return;
+    drawFrame(animFrames[animIdx]);
+    animIdx = (animIdx + 1) % animFrames.length;
+    animTimer = setTimeout(animStep, 40); // ~25fps
+  }
+
+  $('btn-play').addEventListener('click', () => {
+    playing = !playing;
+    $('btn-play').textContent = playing ? 'Pause' : 'Play';
+    if(playing) animStep();
+  });
+
+  $('btn-restart').addEventListener('click', () => {
+    animIdx = 0;
+    if(!playing) drawFrame(animFrames[0]);
+  });
+
+  // ── Run simulation ────────────────────────────────────────────────────────
+  $('run-btn').addEventListener('click', async () => {
+    const btn = $('run-btn');
+    btn.disabled = true;
+    $('status').textContent = 'chargement du module...';
+
+    const N       = parseInt($('p-N').value);
+    const boxSize = parseFloat($('p-box').value);
+    const dt      = parseFloat($('p-dt').value);
+    const steps   = parseInt($('p-steps').value);
+    const vel     = parseFloat($('p-vel').value);
+    const useLJ   = parseInt($('p-potential').value);
+    const eps     = parseFloat($('p-eps').value);
+    const sig     = parseFloat($('p-sig').value);
+    const cut     = parseFloat($('p-cut').value);
+    const rdfBins = 100;
+    const rdfStart= Math.floor(steps * 0.3);
+
+    try {
+      const mod = await SimModule();
+      $('status').textContent = 'simulation en cours...';
+
+      // Laisser le DOM se mettre à jour avant de bloquer
+      await new Promise(r => setTimeout(r, 50));
+
+      const runSim = mod.cwrap('runSimulation', 'string', [
+        'number','number','number','number','number',
+        'number','number','number','number','number','number'
+      ]);
+
+      const jsonStr = runSim(N, boxSize, dt, steps, vel, useLJ, eps, sig, cut, rdfBins, rdfStart);
+      const data    = JSON.parse(jsonStr);
+
+      $('status').textContent = 'rendu...';
+
+      // Animation
+      animFrames = data.frames;
+      animBox    = boxSize;
+      animIdx    = 0;
+      if(animTimer) clearTimeout(animTimer);
+      playing = true;
+      $('btn-play').textContent = 'Pause';
+
+      // Plots
+      plotEnergy(data.energies);
+      plotRDF(data.rdf);
+      plotSpeeds(data.speeds);
+
+      // Afficher les résultats
+      $('results').classList.add('visible');
+
+      // Lancer l'animation
+      animStep();
+
+      $('status').textContent = 'terminé';
+    } catch(e) {
+      $('status').textContent = 'erreur : ' + e.message;
+      console.error(e);
+    }
+
+    btn.disabled = false;
+  });
+  </script>
+
+</body>
+</html>
