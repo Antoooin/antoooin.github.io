@@ -45,7 +45,6 @@ nav .site-title {
   font-size: 0.85rem;
   color: var(--sidebar-active);
   letter-spacing: 0.08em;
-  text-transform: uppercase;
   padding: 0 1.8rem 2.5rem;
   border-bottom: 1px solid #2e2e2e;
 }
