@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Bibliotheque d'Alexandrie - antoooin.github.io</title>
+</head>
+<body bgcolor="#c0c0c0" text="#000000" link="#0000cc" vlink="#551a8b">
+
+  <center>
+    <table border="3" cellpadding="8" cellspacing="2" bgcolor="#ffffff" width="600">
+      <tr>
+        <td bgcolor="#000080" align="center">
+          <font face="Times New Roman" color="#ffff00" size="5">
+            <b>WELCOME BACK LA BIBLIOTHEQUE D'ALEXANDRIE</b>
+          </font>
+          <br>
+          <font face="Times New Roman" color="#c0c0c0" size="2">
+            antoooin.github.io | en construction
+          </font>
+        </td>
+      </tr>
+      <tr>
+        <td bgcolor="#eeeeee">
+          <font face="Times New Roman" size="3">
+            <b>Bienvenue.</b><br><br>
+            Je sais même pas, ça m'a échappé.<br><br>
+            Utilisez le bouton ci-dessous pour ouvrir une page au hasard,
+            ou consultez le catalogue.
+          </font>
+        </td>
+      </tr>
+      <tr>
+        <td align="center" bgcolor="#ffffff">
+          <br>
+          <input type="button" value=">>> Perdez-vous <<<" onclick="ouvrirAuHasard()"
+            style="font-family: Times New Roman; font-size: 14px; background: #000080; color: #ffff00; border: 2px outset #ffe484; padding: 6px 14px; cursor: pointer;">
+          <br><br>
+          <font face="Times New Roman" size="1" color="#888888"><i>"How many thousand books are there in the library? And he replied, 'More than two hundred thousand, O king, and I shall make endeavour in the immediate future to gather together the remainder also, so that the total of five hundred thousand may be reached...'"</i></font>
+          <br><br>
+        </td>
+      </tr>
+    </table>
+
+    <br>
+<!-- CATALOGUE DESACTIVE POUR L'INSTANT/copie-colle une ligne <tr> pour ajouter une entree
+    <table border="3" cellpadding="6" cellspacing="2" bgcolor="#ffffff" width="600">
+      <tr>
+        <td bgcolor="#800000" colspan="3">
+          <font face="Times New Roman" color="#ffffff" size="4"><b>CATALOGUE DES ENTREES</b></font>
+        </td>
+      </tr>
+      <tr bgcolor="#dddddd">
+        <td width="30"><font face="Times New Roman" size="2"><b>#</b></font></td>
+        <td><font face="Times New Roman" size="2"><b>Titre</b></font></td>
+        <td><font face="Times New Roman" size="2"><b>Description</b></font></td>
+      </tr>
+      <tr bgcolor="#ffffff">
+        <td><font face="Times New Roman" size="2">001</font></td>
+        <td><font face="Times New Roman" size="2"><a href="chats.html">Des ptits chats</a></font></td>
+        <td><font face="Times New Roman" size="2">chats de mes ami.es, par ordre alphabetique</font></td>
+      </tr>
+      <tr bgcolor="#eeeeee">
+        <td><font face="Times New Roman" size="2">002</font></td>
+        <td><font face="Times New Roman" size="2"><a href="recommandations.html">Recommandations en tout genre</a></font></td>
+        <td><font face="Times New Roman" size="2">livres, chaines, endroits, trucs</font></td>
+      </tr>
+    </table> -->
+
+    <br>
+
+    <table border="1" cellpadding="4" width="600" bgcolor="#ffffff">
+      <tr>
+        <td align="center">
+          <font face="Times New Roman" size="1" color="#888888">
+            <a href="index.html">retour a l'accueil</a>
+            &nbsp;|&nbsp;
+            antoooin.github.io
+            &nbsp;|&nbsp;
+            <i>last updated : 2026</i>
+          </font>
+        </td>
+      </tr>
+    </table>
+
+  </center>
+
+  <script>
+    const entrees = [
+      { href: "chats.html" },
+      { href: "recommandations.html" },
+    ];
+
+    function ouvrirAuHasard() {
+      const e = entrees[Math.floor(Math.random() * entrees.length)];
+      window.location.href = e.href;
+    }
+  </script>
+
+</body>
+</html>
