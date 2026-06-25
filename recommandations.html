@@ -1,58 +1,106 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recommandations</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recommandations - Bibliotheque d'Alexandrie</title>
 </head>
-<body>
-  <nav>
-    <div class="site-title">67</div>
-    <ul>
-      <li><a href="index.html">Accueil</a></li>
-      <li><a href="chats.html">Des ptits chats</a></li>
-      <li><a href="recommandations.html" class="active">Recommandations en tout genre</a></li>
-      <li><a href="simulations/particules/particules.html">Particules</a></li>
-    </ul>
-    <div class="nav-footer">antoooin.github.io</div>
-  </nav>
+<body bgcolor="#c0c0c0" text="#000000" link="#0000cc" vlink="#551a8b">
 
-  <main>
-  <p class="page-title">Recommandations en tout genre, liste non exhaustive mais c'est ok</p>
+  <center>
 
-  <div class="reco-list">
+    <table border="3" cellpadding="8" cellspacing="2" bgcolor="#ffffff" width="700">
+      <tr>
+        <td bgcolor="#000080" align="center">
+          <font face="Times New Roman" color="#ffff00" size="5">
+            <b>RECOMMANDATIONS EN TOUT GENRE</b>
+          </font>
+          <br>
+          <font face="Times New Roman" color="#c0c0c0" size="2">
+            liste non exhaustive mais c'est ok
+          </font>
+        </td>
+      </tr>
+    </table>
 
-    <div class="reco-card">
-      <img src="assets/images/recommandations/xelopeur_photo.jpg" alt="">
-      <div class="reco-text">
-        <h2><a href="https://www.youtube.com/@xelopeur", target="_blank">xelopeur</a></h2>
-        <span class="reco-tag">Chaîne YouTube</span>
-        <p>Il y parle de physique surtout, de mathématiques aussi, et de musique parfois.</p>
-      </div>
-    </div>
+    <br>
 
-    <div class="reco-card">
-      <img src="assets/images/recommandations/RNE.jpg" alt="">
-      <div class="reco-text">
-        <h2><a href="https://maps.app.goo.gl/tvVnSn5fNDeaooW19", target="_blank">Raviolis Nord Est</a></h2>
-        <span class="reco-tag">Restaurant</span>
-        <p>Allez-y.</p>
-      </div>
-    </div>
+    <table border="3" cellpadding="8" cellspacing="2" bgcolor="#ffffff" width="700">
+      <tr bgcolor="#dddddd">
+        <td width="120"><font face="Times New Roman" size="2"><b>Image</b></font></td>
+        <td><font face="Times New Roman" size="2"><b>Titre</b></font></td>
+        <td width="120"><font face="Times New Roman" size="2"><b>Type</b></font></td>
+        <td><font face="Times New Roman" size="2"><b>Description</b></font></td>
+      </tr>
 
-    <div class="reco-card">
-      <img src="assets/images/recommandations/logo_github.png" alt="">
-      <div class="reco-text">
-        <h2><a href="antoooin.github.io", target="_blank">Mon site perso</a></h2>
-        <span class="reco-tag">Site web</span>
-        <p>Super blog, original et bien pensé</p>
-      </div>
-    </div>
+      <tr bgcolor="#ffffff">
+        <td align="center"><img src="assets/images/recommandations/xelopeur_photo.jpg" width="100" alt="xelopeur"></td>
+        <td><font face="Times New Roman" size="2"><b><a href="https://www.youtube.com/@xelopeur" target="_blank">xelopeur</a></b></font></td>
+        <td><font face="Times New Roman" size="2">Chaine YouTube</font></td>
+        <td><font face="Times New Roman" size="2">Il y parle de physique surtout, de mathematiques aussi, et de musique parfois.</font></td>
+      </tr>
 
-  </div>
-</main>
+      <tr bgcolor="#eeeeee">
+        <td align="center"><img src="assets/images/recommandations/RNE.jpg" width="100" alt="Raviolis Nord Est"></td>
+        <td><font face="Times New Roman" size="2"><b><a href="https://maps.app.goo.gl/tvVnSn5fNDeaooW19" target="_blank">Raviolis Nord Est</a></b></font></td>
+        <td><font face="Times New Roman" size="2">Restaurant</font></td>
+        <td><font face="Times New Roman" size="2">Allez-y.</font></td>
+      </tr>
+
+      <tr bgcolor="#ffffff">
+        <td align="center"><img src="assets/images/recommandations/logo_github.png" width="100" alt="Mon site"></td>
+        <td><font face="Times New Roman" size="2"><b><a href="https://antoooin.github.io" target="_blank">Mon site perso</a></b></font></td>
+        <td><font face="Times New Roman" size="2">Site web</font></td>
+        <td><font face="Times New Roman" size="2">Super blog, original et bien pense</font></td>
+      </tr>
+
+      <!-- copie-colle un bloc <tr> pour ajouter une recommandation -->
+
+    </table>
+
+    <br>
+
+    <table border="0" cellpadding="8" width="700">
+      <tr>
+        <td align="center">
+          <input type="button" value=">>> Ouvrir un parchemin au hasard <<<" onclick="ouvrirAuHasard()"
+            style="font-family: Times New Roman; font-size: 14px; background: #000080; color: #ffff00; border: 2px outset #ffe484; padding: 6px 14px; cursor: pointer;">
+          <br><br>
+          <font face="Times New Roman" size="1" color="#888888"><i>laissez le sort decider</i></font>
+        </td>
+      </tr>
+    </table>
+
+    <br>
+
+    <table border="1" cellpadding="4" width="700" bgcolor="#ffffff">
+      <tr>
+        <td align="center">
+          <font face="Times New Roman" size="1" color="#888888">
+            <a href="bibliotheque.html">retour a la bibliotheque</a>
+            &nbsp;|&nbsp;
+            <a href="index.html">accueil</a>
+            &nbsp;|&nbsp;
+            antoooin.github.io
+            &nbsp;|&nbsp;
+            <i>last updated : 2026</i>
+          </font>
+        </td>
+      </tr>
+    </table>
+
+  </center>
+
+  <script>
+    const entrees = [
+      { href: "chats.html" },
+      { href: "recommandations.html" },
+    ];
+    function ouvrirAuHasard() {
+      const e = entrees[Math.floor(Math.random() * entrees.length)];
+      window.location.href = e.href;
+    }
+  </script>
 
 </body>
-
 </html>
