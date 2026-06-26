@@ -152,6 +152,16 @@
     </table>
 
     <br>
+    <table border="0" cellpadding="8" width="700">
+      <tr>
+        <td align="center">
+          <input type="button" value=">>> Se perdre <<<" onclick="ouvrirAuHasard()"
+            style="font-family: Times New Roman; font-size: 14px; background: #000080; color: #ffff00; border: 2px outset #ffe484; padding: 6px 14px; cursor: pointer;">
+        </td>
+      </tr>
+    </table>
+
+    <br>
 
     <table border="1" cellpadding="4" width="700" bgcolor="#ffffff">
       <tr>
@@ -172,6 +182,17 @@
   </center>
 
   <script>
+    const entrees = [
+      { href: "chats.html" },
+      { href: "recommandations.html" },
+      { href: "course.html" },
+      { href: "bulles.html" },
+    ];
+
+    function ouvrirAuHasard() {
+      const e = entrees[Math.floor(Math.random() * entrees.length)];
+      window.location.href = e.href;
+    }
     const noms = ["Riri", "Fifi", "Loulou", "XP 500 TMAX"];
     let choix = -1;
     let animInterval = null;
