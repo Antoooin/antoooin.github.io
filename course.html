@@ -25,7 +25,6 @@
 
     <br>
 
-    <!-- CHOIX DE L'ESCARGOT -->
     <table border="3" cellpadding="10" cellspacing="2" bgcolor="#ffffff" width="700" id="choix-table">
       <tr>
         <td bgcolor="#800000" colspan="4" align="center">
@@ -67,7 +66,6 @@
 
     <br>
 
-    <!-- PISTE DE COURSE -->
     <table border="3" cellpadding="4" cellspacing="2" bgcolor="#ffffff" width="700" id="piste-table" style="display:none;">
       <tr>
         <td bgcolor="#800000" colspan="2" align="center">
@@ -77,20 +75,18 @@
         </td>
       </tr>
 
-      <!-- Piste escargot 0 -->
       <tr bgcolor="#eeeeee">
         <td width="80" align="center">
           <font face="Times New Roman" size="2"><b>Riri</b></font>
         </td>
         <td bgcolor="#90ee90" style="position:relative; height:50px; padding:0;">
           <div style="position:relative; width:100%; height:50px; background:#90ee90;">
-            <div style="position:absolute; left:0; top:5px; width:40px; height:40px; background:#228B22; border-radius:2px; font-size:24px; text-align:center; line-height:40px;" id="e0">🐌</div>
+            <div style="position:absolute; left:0; top:5px; width:40px; height:40px; border-radius:2px; font-size:24px; text-align:center; line-height:40px;" id="e0">🐌</div>
             <div style="position:absolute; right:0; top:0; bottom:0; width:4px; background:#cc0000;"></div>
           </div>
         </td>
       </tr>
 
-      <!-- Piste escargot 1 -->
       <tr bgcolor="#ffffff">
         <td width="80" align="center">
           <font face="Times New Roman" size="2"><b>Fifi</b></font>
@@ -103,7 +99,6 @@
         </td>
       </tr>
 
-      <!-- Piste escargot 2 -->
       <tr bgcolor="#eeeeee">
         <td width="80" align="center">
           <font face="Times New Roman" size="2"><b>Loulou</b></font>
@@ -116,7 +111,6 @@
         </td>
       </tr>
 
-      <!-- Piste escargot 3 -->
       <tr bgcolor="#ffffff">
         <td width="80" align="center">
           <font face="Times New Roman" size="2"><b>XP 500 TMAX</b></font>
@@ -141,7 +135,6 @@
 
     <br>
 
-    <!-- MESSAGE RESULTAT -->
     <table border="3" cellpadding="12" cellspacing="2" bgcolor="#ffffff" width="700" id="resultat-table" style="display:none;">
       <tr>
         <td bgcolor="#000080" align="center">
@@ -188,7 +181,6 @@
 
     function choisir(i) {
       choix = i;
-      // Highlight du choix
       for(let k = 0; k < 4; k++) {
         document.getElementById('btn-' + k).style.border = '2px solid #aaaaaa';
         document.getElementById('btn-' + k).style.background = '#eeeeee';
@@ -196,12 +188,15 @@
       document.getElementById('btn-' + i).style.border = '3px solid #ffff00';
       document.getElementById('btn-' + i).style.background = '#000080';
 
-      // Après un court délai, passer à la piste
       setTimeout(() => {
         document.getElementById('choix-table').style.display = 'none';
         document.getElementById('piste-table').style.display = '';
         document.getElementById('choix-affiche').innerHTML =
           'Vous avez choisi : <b>' + noms[i] + '</b>';
+        for(let k = 0; k < 4; k++) {
+          document.getElementById('e' + k).style.background = 'transparent';
+        }
+        document.getElementById('e' + i).style.background = '#ffe484';
       }, 400);
     }
 
@@ -210,11 +205,7 @@
       courseTerminee = false;
       positions = [0, 0, 0, 0];
 
-      // Vitesses aléatoires entre 0.3 et 1.0
       vitesses = vitesses.map(() => 0.3 + Math.random() * 0.7);
-
-      // Largeur de la piste (en px, approximée)
-      const piste = document.getElementById('e0').parentElement.offsetWidth - 50;
 
       animInterval = setInterval(() => {
         if(courseTerminee) return;
@@ -254,8 +245,8 @@
       choix = -1;
       positions = [0, 0, 0, 0];
       for(let i = 0; i < 4; i++) {
-        const el = document.getElementById('e' + i);
-        el.style.left = '0px';
+        document.getElementById('e' + i).style.left = '0px';
+        document.getElementById('e' + i).style.background = 'transparent';
       }
       document.getElementById('resultat-table').style.display = 'none';
       document.getElementById('piste-table').style.display = 'none';

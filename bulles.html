@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bulles</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #1a1a2e;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      font-family: Times New Roman, serif;
+    }
+
+    #zone {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .bulle {
+      position: absolute;
+      border-radius: 50%;
+      cursor: pointer;
+      opacity: 0.75;
+      border: 2px solid rgba(255,255,255,0.4);
+      box-shadow: inset -4px -4px 10px rgba(0,0,0,0.2),
+                  inset 4px 4px 10px rgba(255,255,255,0.3);
+      transition: transform 0.1s;
+    }
+
+    .bulle:hover {
+      transform: scale(1.08);
+      opacity: 0.95;
+    }
+
+    .bulle.pop {
+      animation: eclater 0.2s forwards;
+    }
+
+    @keyframes eclater {
+      0%   { transform: scale(1);   opacity: 0.75; }
+      50%  { transform: scale(1.4); opacity: 0.4;  }
+      100% { transform: scale(0);   opacity: 0;    }
+    }
+
+    #ui {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+      padding: 10px;
+      background: rgba(0,0,0,0.5);
+      z-index: 10;
+    }
+
+    #compteur {
+      color: #c0c0c0;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    #ui input[type=button] {
+      font-family: Times New Roman;
+      font-size: 13px;
+      background: #000080;
+      color: #ffff00;
+      border: 2px outset #ffe484;
+      padding: 4px 12px;
+      cursor: pointer;
+      margin: 0 4px;
+    }
+
+    #lien-retour {
+      color: #888888;
+      font-size: 11px;
+      font-style: italic;
+      display: block;
+      margin-top: 5px;
+    }
+
+    #lien-retour a { color: #888888; }
+  </style>
+</head>
+<body>
+
+  <div id="zone"></div>
+
+  <div id="ui">
+    <div id="compteur">bulles eclatees : 0</div>
+    <input type="button" value="+ de bulles" onclick="ajouterBulles(15)">
+    <input type="button" value="tout eclater" onclick="toutEclater()">
+    <span id="lien-retour"><a href="bibliotheque.html">retour a la bibliotheque</a></span>
+  </div>
+
+  <!-- Son pop : remplace pop.mp3 par ton fichier audio -->
+  <audio id="son-pop" src="assets/sons/pop.mp3" preload="auto"></audio>
+
+  <script>
+    const couleurs = [
+      '#ff6b6b', '#ffa94d', '#ffe066', '#69db7c',
+      '#4dabf7', '#cc5de8', '#f783ac', '#a9e34b',
+      '#63e6be', '#74c0fc', '#ff8787', '#da77f2'
+    ];
+
+    let compteur = 0;
+    const zone = document.getElementById('zone');
+    const sonPop = document.getElementById('son-pop');
+
+    function creerBulle() {
+      const taille = 30 + Math.random() * 90;
+      const x = Math.random() * (window.innerWidth  - taille);
+      const y = Math.random() * (window.innerHeight - taille - 60);
+      const couleur = couleurs[Math.floor(Math.random() * couleurs.length)];
+
+      const b = document.createElement('div');
+      b.className = 'bulle';
+      b.style.width  = taille + 'px';
+      b.style.height = taille + 'px';
+      b.style.left   = x + 'px';
+      b.style.top    = y + 'px';
+      b.style.background = couleur;
+
+      b.addEventListener('click', () => eclater(b));
+      zone.appendChild(b);
+    }
+
+    function eclater(b) {
+      if(b.classList.contains('pop')) return;
+      b.classList.add('pop');
+
+      // Son pop
+      const son = sonPop.cloneNode();
+      son.volume = 0.5;
+      son.play().catch(() => {}); // silencieux si pas de fichier
+
+      compteur++;
+      document.getElementById('compteur').textContent = 'bulles eclatees : ' + compteur;
+
+      setTimeout(() => b.remove(), 200);
+
+      // Remplacer par une nouvelle bulle après un délai
+      setTimeout(creerBulle, 600 + Math.random() * 800);
+    }
+
+    function ajouterBulles(n) {
+      for(let i = 0; i < n; i++) {
+        setTimeout(creerBulle, i * 80);
+      }
+    }
+
+    function toutEclater() {
+      document.querySelectorAll('.bulle').forEach(b => eclater(b));
+    }
+
+    // Init
+    ajouterBulles(25);
+  </script>
+
+</body>
+</html>
