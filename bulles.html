@@ -107,6 +107,7 @@
   </div>
 
   <audio id="son-pop" src="assets/sons/pop.mp3" preload="auto"></audio>
+  <audio id="son-hyperpop" src="assets/sons/hyperpop.mp3" preload="auto"></audio>
 
   <script>
     const entrees = [
@@ -171,6 +172,7 @@
     }
 
     function toutEclater() {
+      document.getElementById('son-hyperpop').play().catch(() => {});
       document.querySelectorAll('.bulle').forEach(b => eclater(b));
     }
 
