@@ -94,13 +94,33 @@
     <div id="compteur">bulles eclatees : 0</div>
     <input type="button" value="+ de bulles" onclick="ajouterBulles(15)">
     <input type="button" value="tout eclater" onclick="toutEclater()">
-    <span id="lien-retour"><a href="bibliotheque.html">retour a la bibliotheque</a></span>
+    <input type="button" value=">>> Se perdre <<<" onclick="ouvrirAuHasard()">
+    <span id="lien-retour">
+      <a href="bibliotheque.html">retour à la bibliothèque</a>
+      &nbsp;|&nbsp;
+      <a href="index.html">retour à l'accueil</a>
+      &nbsp;|&nbsp;
+      antoooin.github.io
+      &nbsp;|&nbsp;
+      <i>last updated : 2026</i>
+    </span>
   </div>
 
-  <!-- Son pop : remplace pop.mp3 par ton fichier audio -->
   <audio id="son-pop" src="assets/sons/pop.mp3" preload="auto"></audio>
 
   <script>
+    const entrees = [
+      { href: "chats.html" },
+      { href: "recommandations.html" },
+      { href: "course.html" },
+      { href: "bulles.html" },
+    ];
+
+    function ouvrirAuHasard() {
+      const e = entrees[Math.floor(Math.random() * entrees.length)];
+      window.location.href = e.href;
+    }
+
     const couleurs = [
       '#ff6b6b', '#ffa94d', '#ffe066', '#69db7c',
       '#4dabf7', '#cc5de8', '#f783ac', '#a9e34b',
@@ -133,17 +153,14 @@
       if(b.classList.contains('pop')) return;
       b.classList.add('pop');
 
-      // Son pop
       const son = sonPop.cloneNode();
       son.volume = 0.5;
-      son.play().catch(() => {}); // silencieux si pas de fichier
+      son.play().catch(() => {});
 
       compteur++;
       document.getElementById('compteur').textContent = 'bulles eclatees : ' + compteur;
 
       setTimeout(() => b.remove(), 200);
-
-      // Remplacer par une nouvelle bulle après un délai
       setTimeout(creerBulle, 600 + Math.random() * 800);
     }
 
@@ -157,7 +174,6 @@
       document.querySelectorAll('.bulle').forEach(b => eclater(b));
     }
 
-    // Init
     ajouterBulles(25);
   </script>
 
