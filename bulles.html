@@ -150,13 +150,24 @@
       zone.appendChild(b);
     }
 
+
+    function ajouterBulles(n) {
+      for(let i = 0; i < n; i++) {
+        setTimeout(creerBulle, i * 80);
+      }
+    }
+
+    let massToutEclater = false;
+
     function eclater(b) {
       if(b.classList.contains('pop')) return;
       b.classList.add('pop');
 
-      const son = sonPop.cloneNode();
-      son.volume = 0.5;
-      son.play().catch(() => {});
+      if(!massToutEclater) {
+        const son = sonPop.cloneNode();
+        son.volume = 0.5;
+        son.play().catch(() => {});
+      }
 
       compteur++;
       document.getElementById('compteur').textContent = 'bulles eclatees : ' + compteur;
@@ -165,15 +176,11 @@
       setTimeout(creerBulle, 600 + Math.random() * 800);
     }
 
-    function ajouterBulles(n) {
-      for(let i = 0; i < n; i++) {
-        setTimeout(creerBulle, i * 80);
-      }
-    }
-
     function toutEclater() {
+      massToutEclater = true;
       document.getElementById('son-hyperpop').play().catch(() => {});
       document.querySelectorAll('.bulle').forEach(b => eclater(b));
+      setTimeout(() => massToutEclater = false, 500);
     }
 
     ajouterBulles(25);
