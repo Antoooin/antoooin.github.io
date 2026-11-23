@@ -300,3 +300,89 @@ section > .section-intro {
   .entry { grid-template-columns: 1fr; gap: 4px; }
   .entry .tag, .entry .btn { justify-self: start; }
 }
+
+
+/* ============ Menu déroulant (nav) ============ */
+.site-nav .dropdown { position: relative; }
+
+.dropdown-toggle {
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--muted);
+  background: none;
+  border: 0;
+  padding: 6px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+/* petit chevron */
+.dropdown-toggle::after {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-left: 8px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+}
+
+.site-nav .dropdown:hover .dropdown-toggle,
+.site-nav .dropdown:focus-within .dropdown-toggle,
+.site-nav .dropdown.open .dropdown-toggle {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.site-nav .dropdown .dropdown-toggle.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* le menu (fermé par défaut) */
+.site-nav .dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 220px;
+  max-width: none;
+  margin: 8px 0 0;
+  padding: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* pont invisible : évite que le menu se ferme en traversant l'espace sous le bouton */
+.site-nav .dropdown-menu::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -8px;
+  height: 8px;
+}
+
+.site-nav .dropdown:hover .dropdown-menu,
+.site-nav .dropdown:focus-within .dropdown-menu,
+.site-nav .dropdown.open .dropdown-menu {
+  display: flex;
+}
+
+.site-nav .dropdown-menu a {
+  display: block;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+/* sur petit écran, le menu s'ouvre vers la gauche pour ne pas déborder */
+@media (max-width: 640px) {
+  .site-nav .dropdown-menu { left: auto; right: 0; }
+}

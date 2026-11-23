@@ -3,349 +3,234 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Particules</title>
+  <title>Particules · Antoine Pagot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../style.css">
-  <style>
-    /* ── SIMULATION PAGE SPECIFIC ── */
-    .sim-layout {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-
-    .sim-header {
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 1rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .sim-header h1 {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.85rem;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      margin-bottom: 0.4rem;
-    }
-
-    .sim-header p {
-      font-size: 0.82rem;
-      color: #666;
-      font-weight: 300;
-      line-height: 1.6;
-    }
-
-    /* ── CONTROLS ── */
-    .controls {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      padding: 1.6rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 1rem 1.5rem;
-      
-    }
-
-    .control-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-
-    .control-group label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-    }
-
-    .control-group input,
-    .control-group select {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.78rem;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 0.4rem 0.6rem;
-      width: 100%;
-      outline: none;
-      transition: border-color 0.15s;
-    }
-
-    .control-group input:focus,
-    .control-group select:focus {
-      border-color: #aaa;
-    }
-
-    .controls-footer {
-      grid-column: 1 / -1;
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-      padding-top: 0.5rem;
-      border-top: 1px solid var(--border);
-    }
-
-    #run-btn {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      background: var(--sidebar-bg);
-      color: var(--sidebar-active);
-      border: none;
-      padding: 0.55rem 1.4rem;
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-
-    #run-btn:hover { background: #2e2e2e; }
-    #run-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-    #status {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--muted);
-    }
-
-    /* ── LJ PARAMS (shown/hidden) ── */
-    .lj-params { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem 1.5rem; }
-    .lj-params.hidden { display: none; }
-
-    /* ── RESULTS ── */
-    .results { display: none; flex-direction: column; gap: 1.5rem; }
-    .results.visible { display: flex; }
-
-    .plots-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    .plot-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      padding: 1rem;
-    }
-
-    .plot-card h2 {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-      margin-bottom: 0.8rem;
-    }
-
-    .plot-card canvas {
-      width: 100%;
-      display: block;
-    }
-
-    /* Animation card spans full width */
-    .plot-card.anim-card {
-      grid-column: 1 / -1;
-    }
-
-    .anim-controls {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      margin-top: 0.6rem;
-    }
-
-    .anim-controls button {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      background: var(--sidebar-bg);
-      color: var(--sidebar-text);
-      border: none;
-      padding: 0.3rem 0.8rem;
-      cursor: pointer;
-    }
-
-    .anim-controls button:hover { color: #fff; }
-
-    #frame-counter {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--muted);
-    }
-
-    #anim-canvas {
-      background: #0d0d0d;
-      border: 1px solid #2a2a2a;
-    }
-
-    @media (max-width: 700px) {
-      .plots-grid { grid-template-columns: 1fr; }
-      .plot-card.anim-card { grid-column: 1; }
-    }
-  </style>
+  <link rel="stylesheet" href="particules.css">
 </head>
 <body>
 
-  <nav>
-    <div class="site-title">ANTOOOIN</div>
+  <header class="site-header">
+    <div class="header-inner">
+      <h1>Antoine Pagot</h1>
+      <p class="tagline">Physique · ARTeQ, ENS Paris-Saclay</p>
+      <ul class="contact-links">
+        <li>
+          <a href="mailto:antoine.pagot@ens-paris-saclay.fr">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>
+            <span>antoine.pagot@ens-paris-saclay.fr</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.linkedin.com/in/antoine-pagot/">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+            <span>antoine-pagot</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/antoooin">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+            <span>antoooin</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <nav class="site-nav">
     <ul>
-      <li><a href="../../index.html">Accueil</a></li>
-      <li><a href="particules.html" class="active">Particules</a></li>
+      <li><a href="../../index.html">CV</a></li>
+      <li class="dropdown">
+        <button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">Ressources</button>
+        <ul class="dropdown-menu">
+          <li>En construction</li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <button class="dropdown-toggle active" aria-haspopup="true" aria-expanded="false">Simulations</button>
+        <ul class="dropdown-menu">
+          <li><a href="particules.html" class="active">Particules</a></li>
+        </ul>
+      </li>
     </ul>
-    <div class="nav-footer">antoooin.github.io</div>
-    <div class="nav-footer">en construction</div>
-    <div class="nav-footer">last updated : 2026</div>
   </nav>
 
   <main>
-    <div class="sim-layout">
 
-      <div class="sim-header">
-        <h1>Dynamique moléculaire 2D</h1>
-        <p>Projet réalisé en M1.<br>
-        N particules en interaction dans une boîte carrée avec conditions aux limites périodiques.<br>
-        Potentiel de Lennard-Jones tronqué, intégrateur Velocity Verlet.</p>
-        <p style="margin-top: 0.8rem;">
-          <strong style="font-family:'IBM Plex Mono',monospace; font-size:0.75rem; color: var(--text);">Paramètres suggérés :</strong><br>
-          Gaz (basse densité) : N=100, dt=0.001, steps=10000.<br>
-          Liquide/solide (haute densité) : N=400, dt=0.001, steps=10000.<br>
-          Garder boxSize=20 et vitesse initiale par défaut pour faire apparaître les comportements émergents (formation de clusters à haute densité).<br>
-          Paramètres LJ : amusez-vous.
-        </p>
+    <section>
+      <h2>Dynamique moléculaire 2D</h2>
+      <p class="section-intro">
+        Projet réalisé en M1. N particules en interaction dans une boîte carrée avec conditions aux limites périodiques.
+        Potentiel de Lennard-Jones tronqué, intégrateur Velocity Verlet.
+      </p>
+      <p><a class="btn" href="cr-particules.pdf" target="_blank" rel="noopener">Compte rendu (PDF)</a></p>
+
+      <div class="note">
+        <strong>Paramètres suggérés</strong>
+        <ul>
+          <li>Gaz (basse densité) : N = 100, dt = 0.001, steps = 10000.</li>
+          <li>Liquide/solide (haute densité) : N = 400, dt = 0.001, steps = 10000.</li>
+          <li>Garder boxSize = 20 et la vitesse initiale par défaut pour faire apparaître les comportements émergents (formation de clusters à haute densité).</li>
+          <li>Paramètres LJ : amusez-vous.</li>
+        </ul>
       </div>
+    </section>
 
+    <section>
+      <h2>Paramètres</h2>
       <div class="controls">
         <div class="control-group">
-          <label>N particules</label>
+          <label for="p-N">N particules</label>
           <input type="number" id="p-N" value="100" min="10" max="400">
         </div>
         <div class="control-group">
-          <label>Taille boîte</label>
+          <label for="p-box">Taille de la boîte</label>
           <input type="number" id="p-box" value="20" min="5" max="50" step="1">
         </div>
         <div class="control-group">
-          <label>Pas de temps dt</label>
+          <label for="p-dt">Pas de temps dt</label>
           <input type="number" id="p-dt" value="0.001" min="0.0001" max="0.001" step="0.0001">
         </div>
         <div class="control-group">
-          <label>Nombre de steps</label>
+          <label for="p-steps">Nombre de steps</label>
           <input type="number" id="p-steps" value="10000" min="500" max="20000" step="500">
         </div>
         <div class="control-group">
-          <label>Vitesse initiale max</label>
+          <label for="p-vel">Vitesse initiale max</label>
           <input type="number" id="p-vel" value="0.3" min="0.1" max="2.0" step="0.1">
         </div>
         <div class="control-group">
-          <label>Potentiel</label>
+          <label for="p-potential">Potentiel</label>
           <select id="p-potential">
             <option value="1">Lennard-Jones</option>
             <option value="0">Gaz parfait</option>
           </select>
         </div>
         <div class="control-group">
-          <label>Vitesse animation</label>
-          <input type="range" id="p-speed" min="1" max="10" value="4" step="1"
-            style="width:100%; accent-color: var(--sidebar-active);">
-          <span id="speed-label" style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; color:var(--muted);">×4</span>
+          <label for="p-speed">Vitesse de l'animation</label>
+          <input type="range" id="p-speed" min="1" max="10" value="4" step="1">
+          <span class="range-value" id="speed-label">×4</span>
         </div>
 
-        <!-- LJ params -->
+        <!-- Paramètres LJ -->
         <div class="lj-params" id="lj-params">
           <div class="control-group">
-            <label>ε (epsilon)</label>
+            <label for="p-eps">ε (epsilon)</label>
             <input type="number" id="p-eps" value="1.0" min="0.1" max="5.0" step="0.1">
           </div>
           <div class="control-group">
-            <label>σ (sigma)</label>
+            <label for="p-sig">σ (sigma)</label>
             <input type="number" id="p-sig" value="1.0" min="0.5" max="2.0" step="0.1">
           </div>
           <div class="control-group">
-            <label>Cutoff</label>
+            <label for="p-cut">Cutoff</label>
             <input type="number" id="p-cut" value="2.5" min="1.5" max="5.0" step="0.1">
           </div>
         </div>
 
         <div class="controls-footer">
-          <button id="run-btn">Lancer</button>
+          <button class="btn btn-primary" id="run-btn">Lancer</button>
           <span id="status">prêt</span>
         </div>
       </div>
+    </section>
 
-      <!-- RESULTS -->
-      <div class="results" id="results">
+    <!-- RÉSULTATS -->
+    <section class="results" id="results">
+      <h2>Résultats</h2>
 
-        <!-- Animation -->
-        <div class="plot-card anim-card">
-          <h2>Positions des particules</h2>
-          <canvas id="anim-canvas" width="800" height="400"></canvas>
-          <div class="anim-controls">
-            <button id="btn-play">Pause</button>
-            <button id="btn-restart">↺ Restart</button>
-            <span id="frame-counter">frame 0 / 0</span>
-          </div>
+      <div class="plot-card">
+        <h3>Positions des particules</h3>
+        <canvas id="anim-canvas" width="800" height="400"></canvas>
+        <div class="anim-controls">
+          <button class="btn" id="btn-play">Pause</button>
+          <button class="btn" id="btn-restart">↺ Restart</button>
+          <span id="frame-counter">frame 0 / 0</span>
         </div>
-
-        <div class="plots-grid">
-          <!-- Énergie -->
-          <div class="plot-card">
-            <h2>Énergie</h2>
-            <canvas id="energy-canvas" width="400" height="220"></canvas>
-          </div>
-
-          <!-- RDF -->
-          <div class="plot-card">
-            <h2>RDF — g(r)</h2>
-            <canvas id="rdf-canvas" width="400" height="220"></canvas>
-          </div>
-
-          <!-- Distribution des vitesses -->
-          <div class="plot-card">
-            <h2>Distribution des vitesses</h2>
-            <canvas id="speed-canvas" width="400" height="220"></canvas>
-          </div>
-        </div>
-
       </div>
-    </div>
+
+      <div class="plots-grid">
+        <div class="plot-card">
+          <h3>Énergie</h3>
+          <canvas id="energy-canvas" width="400" height="220"></canvas>
+        </div>
+
+        <div class="plot-card">
+          <h3>RDF : g(r)</h3>
+          <canvas id="rdf-canvas" width="400" height="220"></canvas>
+        </div>
+
+        <div class="plot-card">
+          <h3>Distribution des vitesses</h3>
+          <canvas id="speed-canvas" width="400" height="220"></canvas>
+        </div>
+      </div>
+    </section>
+
   </main>
+
+  <footer class="site-footer">
+    <span>antoooin.github.io · en construction</span>
+    <ul class="contact-links">
+      <li>
+        <a href="mailto:antoine.pagot@ens-paris-saclay.fr">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>
+          <span>antoine.pagot@ens-paris-saclay.fr</span>
+        </a>
+      </li>
+    </ul>
+    <span>Dernière mise à jour : 2026</span>
+  </footer>
+
+  <!-- Menu déroulant de la nav (ouverture au toucher) -->
+  <script>
+    document.querySelectorAll('.dropdown').forEach(dd => {
+      const btn = dd.querySelector('.dropdown-toggle');
+      const set = open => { dd.classList.toggle('open', open); btn.setAttribute('aria-expanded', open); };
+      btn.addEventListener('click', () => set(!dd.classList.contains('open')));
+      dd.addEventListener('mouseleave', () => set(false));
+      document.addEventListener('click', e => { if (!dd.contains(e.target)) set(false); });
+    });
+  </script>
 
   <script src="sim.js"></script>
   <script>
   // ── Helpers ──────────────────────────────────────────────────────────────
   const $ = id => document.getElementById(id);
 
-  // Show/hide LJ params
+  // Afficher / masquer les paramètres LJ
   $('p-potential').addEventListener('change', () => {
-    const lj = $('lj-params');
-    lj.classList.toggle('hidden', $('p-potential').value === '0');
+    $('lj-params').classList.toggle('hidden', $('p-potential').value === '0');
   });
 
-  // ── Colors ───────────────────────────────────────────────────────────────
+  // ── Couleurs (alignées sur style.css) ────────────────────────────────────
+  const FONT = 'Inter, system-ui, sans-serif';
   const C = {
-    bg:      '#0d0d0d',
-    particle:'#e8e060',
-    ek:      '#e8e060',
-    ep:      '#6090e0',
-    etot:    '#e0e0e0',
-    rdf:     '#e8e060',
-    speed:   '#6090e0',
-    grid:    '#1e1e1e',
-    axis:    '#444',
-    text:    '#888',
+    animBg:   '#14213d',   // fond de l'animation (bleu nuit du header)
+    animGrid: '#1d2d52',
+    particle: '#9db8ff',
+    plotBg:   '#ffffff',
+    grid:     '#ececea',
+    axis:     '#6b6b70',
+    ref:      '#c9c9c4',
+    ek:       '#e0832f',
+    ep:       '#2f5bea',
+    etot:     '#1c1c1e',
+    rdf:      '#2f5bea',
+    speed:    '#2f5bea',
   };
 
   // ── Canvas plot helpers ───────────────────────────────────────────────────
   function clearCanvas(ctx, w, h) {
-    ctx.fillStyle = '#fafaf8';
+    ctx.fillStyle = C.plotBg;
     ctx.fillRect(0, 0, w, h);
   }
 
   function drawGrid(ctx, x0, y0, w, h, nx, ny) {
-    ctx.strokeStyle = '#e8e8e4';
-    ctx.lineWidth = 0.5;
+    ctx.strokeStyle = C.grid;
+    ctx.lineWidth = 0.8;
     for(let i = 0; i <= nx; i++) {
       const x = x0 + i * w / nx;
       ctx.beginPath(); ctx.moveTo(x, y0); ctx.lineTo(x, y0 + h); ctx.stroke();
@@ -357,8 +242,8 @@
   }
 
   function axisLabel(ctx, text, x, y, align='center') {
-    ctx.font = '10px IBM Plex Mono, monospace';
-    ctx.fillStyle = '#999';
+    ctx.font = `10px ${FONT}`;
+    ctx.fillStyle = C.axis;
     ctx.textAlign = align;
     ctx.fillText(text, x, y);
   }
@@ -396,7 +281,7 @@
     function drawLine(vals, color) {
       ctx.beginPath();
       ctx.strokeStyle = color;
-      ctx.lineWidth = 1.2;
+      ctx.lineWidth = 1.4;
       vals.forEach((v, i) => {
         const x = mapX(steps[i]), y = mapY(v);
         i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
@@ -404,13 +289,13 @@
       ctx.stroke();
     }
 
-    drawLine(Eps,   '#6090e0');
-    drawLine(Eks,   '#e8e060');
-    drawLine(Etots, '#ccc');
+    drawLine(Eps,   C.ep);
+    drawLine(Eks,   C.ek);
+    drawLine(Etots, C.etot);
 
-    // Axes labels
-    ctx.font = '9px IBM Plex Mono, monospace';
-    ctx.fillStyle = '#999';
+    // Labels des axes
+    ctx.font = `9px ${FONT}`;
+    ctx.fillStyle = C.axis;
     ctx.textAlign = 'right';
     [yMin, (yMin+yMax)/2, yMax].forEach(v => {
       ctx.fillText(v.toFixed(1), pad.left - 4, mapY(v) + 3);
@@ -421,11 +306,11 @@
     });
 
     // Légende
-    const items = [['Ek','#e8e060'],['Ep','#6090e0'],['Etot','#ccc']];
+    const items = [['Ek', C.ek], ['Ep', C.ep], ['Etot', C.etot]];
     items.forEach(([label, color], i) => {
       ctx.fillStyle = color;
       ctx.fillRect(pad.left + i * 60, pad.top - 14, 10, 2);
-      ctx.fillStyle = '#999';
+      ctx.fillStyle = C.axis;
       ctx.textAlign = 'left';
       ctx.fillText(label, pad.left + i * 60 + 14, pad.top - 10);
     });
@@ -451,26 +336,26 @@
     function mapX(r) { return pad.left + (r - xMin) / (xMax - xMin) * w; }
     function mapY(v) { return pad.top + h - Math.min(v, yMax) / yMax * h; }
 
-    // g(r) = 1 reference line
-    ctx.strokeStyle = '#ccc';
+    // Ligne de référence g(r) = 1
+    ctx.strokeStyle = C.ref;
     ctx.setLineDash([4, 4]);
-    ctx.lineWidth = 0.8;
+    ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(pad.left, mapY(1)); ctx.lineTo(pad.left + w, mapY(1));
     ctx.stroke();
     ctx.setLineDash([]);
 
     ctx.beginPath();
-    ctx.strokeStyle = '#e8e060';
-    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = C.rdf;
+    ctx.lineWidth = 1.6;
     rs.forEach((r, i) => {
       const x = mapX(r), y = mapY(grs[i]);
       i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
     });
     ctx.stroke();
 
-    ctx.font = '9px IBM Plex Mono, monospace';
-    ctx.fillStyle = '#999';
+    ctx.font = `9px ${FONT}`;
+    ctx.fillStyle = C.axis;
     ctx.textAlign = 'right';
     [0, yMax/2, yMax].forEach(v => {
       ctx.fillText(v.toFixed(1), pad.left - 4, mapY(v) + 3);
@@ -483,7 +368,7 @@
     axisLabel(ctx, '-- g(r)=1', pad.left + w - 20, mapY(1) - 5, 'right');
   }
 
-  // ── Plot: speed distribution ───────────────────────────────────────────
+  // ── Plot: distribution des vitesses ───────────────────────────────────────
   function plotSpeeds(speeds) {
     const canvas = $('speed-canvas');
     const ctx = canvas.getContext('2d');
@@ -509,12 +394,12 @@
     hist.forEach((count, i) => {
       const x = pad.left + i * barW;
       const bh = (count / maxCount) * h;
-      ctx.fillStyle = '#6090e0';
+      ctx.fillStyle = C.speed;
       ctx.fillRect(x + 0.5, pad.top + h - bh, barW - 1, bh);
     });
 
-    ctx.font = '9px IBM Plex Mono, monospace';
-    ctx.fillStyle = '#999';
+    ctx.font = `9px ${FONT}`;
+    ctx.fillStyle = C.axis;
     ctx.textAlign = 'center';
     [0, vMax / 2, vMax].forEach(v => {
       ctx.fillText(v.toFixed(2), pad.left + (v / vMax) * w, pad.top + h + 18);
@@ -534,11 +419,11 @@
     const ctx    = canvas.getContext('2d');
     const W = canvas.width, H = canvas.height;
 
-    ctx.fillStyle = '#0d0d0d';
+    ctx.fillStyle = C.animBg;
     ctx.fillRect(0, 0, W, H);
 
     // Grille
-    ctx.strokeStyle = '#1a1a1a';
+    ctx.strokeStyle = C.animGrid;
     ctx.lineWidth = 0.5;
     for(let i = 0; i <= 10; i++) {
       const x = i / 10 * W, y = i / 10 * H;
@@ -549,12 +434,12 @@
     const N = frameData.length / 2;
     const r = Math.max(2, Math.min(4, 300 / N));
 
+    ctx.fillStyle = C.particle;
     for(let i = 0; i < N; i++) {
       const px = (frameData[i * 2]     / animBox) * W;
       const py = (frameData[i * 2 + 1] / animBox) * H;
       ctx.beginPath();
       ctx.arc(px, py, r, 0, Math.PI * 2);
-      ctx.fillStyle = '#e8e060';
       ctx.fill();
     }
 
@@ -581,7 +466,7 @@
     if(!playing) drawFrame(animFrames[0]);
   });
 
-  // ── Run simulation ────────────────────────────────────────────────────────
+  // ── Lancer la simulation ──────────────────────────────────────────────────
   $('run-btn').addEventListener('click', async () => {
     const btn = $('run-btn');
     btn.disabled = true;
@@ -624,7 +509,7 @@
       playing = true;
       $('btn-play').textContent = 'Pause';
 
-      // Plots
+      // Graphiques
       plotEnergy(data.energies);
       plotRDF(data.rdf);
       plotSpeeds(data.speeds);
