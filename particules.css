@@ -1,0 +1,169 @@
+/* Page Particules : complète style.css (variables, header, nav, footer, .btn, section...) */
+
+/* ============ Lien retour ============ */
+.back {
+  margin: 0 0 20px;
+  font-size: 0.9rem;
+}
+.back a { color: var(--muted); }
+.back a:hover { color: var(--accent); text-decoration: none; }
+
+/* ============ Note "paramètres suggérés" ============ */
+.note {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+.note strong { color: var(--text); font-weight: 600; }
+.note ul { margin: 8px 0 0; padding-left: 1.2em; }
+.note li + li { margin-top: 4px; }
+
+/* ============ Contrôles ============ */
+.controls {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px 20px;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.control-group label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.control-group input[type="number"],
+.control-group select {
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 10px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.control-group input[type="number"]:focus,
+.control-group select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.control-group input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.range-value {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Paramètres Lennard-Jones (affichés ou masqués selon le potentiel) */
+.lj-params {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px 20px;
+}
+.lj-params.hidden { display: none; }
+
+.controls-footer {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+#status {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* Boutons (réutilise .btn de style.css) */
+button.btn {
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btn.btn-primary {
+  padding: 8px 22px;
+  font-size: 0.9rem;
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.btn.btn-primary:hover { background: #2449c4; border-color: #2449c4; color: #fff; }
+.btn.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ============ Résultats ============ */
+.results { display: none; flex-direction: column; gap: 16px; }
+.results.visible { display: flex; }
+
+.plots-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.plot-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.plot-card h3 {
+  margin: 0 0 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.plot-card canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+#anim-canvas {
+  background: #14213d;
+  border-radius: 8px;
+}
+
+.anim-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+#frame-counter {
+  margin-left: auto;
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 700px) {
+  .plots-grid { grid-template-columns: 1fr; }
+}
