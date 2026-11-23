@@ -3,29 +3,116 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Accueil</title>
+  <title>Antoine Pagot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <nav>
-    <div class="site-title">Antoine Pagot</div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <h1>Antoine Pagot</h1>
+      <p class="tagline">Physique · ARTeQ, ENS Paris-Saclay</p>
+    </div>
+  </header>
+
+  <nav class="site-nav">
     <ul>
-      <li><a href="index.html" class="active">Accueil</a></li>
-      <li><a href="simulations/particules/particules.html">Particules</a></li>
+      <li><a href="index.html" class="active">CV</a></li>
+      <li><a href="ressources.html">Ressources</a></li>
+      <li><a href="simulations.html">Simulations</a></li>
     </ul>
-    <div class="nav-footer">antoooin.github.io</div>
-    <div class="nav-footer">(en construction)</div>
-    <div class="nav-footer">Last updated : 2026</div>
   </nav>
 
   <main>
-    <div class="card">
-      <h1>Antoin :</h1>
-      <p>
-        Physicien de temps en temps, twittos à temps plein. ARTeQ à ENS Paris-Saclay.
+
+    <section>
+      <h2>À propos</h2>
+      <p class="section-intro">
+        Physicien de temps en temps, twittos à temps plein.
+        <!-- TODO : remplace par 2-3 phrases sur toi -->
       </p>
-    </div>
+    </section>
+
+    <section>
+      <h2>Formation</h2>
+      <ul class="entries">
+        <li class="entry">
+          <span class="when">2025 – ?</span>
+          <div class="what">
+            <h3>ARTeQ</h3>
+            <p>ENS Paris-Saclay</p>
+          </div>
+          <span class="tag">Master</span>
+        </li>
+        <li class="entry">
+          <span class="when">20XX – 20XX</span>
+          <div class="what">
+            <h3>Intitulé de la formation</h3>
+            <p>Établissement</p>
+          </div>
+          <span class="tag">Licence</span>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Expériences</h2>
+      <ul class="entries">
+        <li class="entry">
+          <span class="when">Été 20XX</span>
+          <div class="what">
+            <h3>Stage — Laboratoire</h3>
+            <p>Une ligne sur le sujet et ce que tu y as fait.</p>
+          </div>
+          <span class="tag">Stage</span>
+        </li>
+        <li class="entry">
+          <span class="when">20XX</span>
+          <div class="what">
+            <h3>Autre expérience</h3>
+            <p>Description courte.</p>
+          </div>
+          <span class="tag">Projet</span>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Compétences</h2>
+      <ul class="chips">
+        <li>Python</li>
+        <li>Simulation numérique</li>
+        <li>LaTeX</li>
+        <li>Physique quantique</li>
+        <!-- TODO : ajoute les tiennes -->
+      </ul>
+    </section>
+
+    <section>
+      <h2>Contact</h2>
+      <ul class="entries">
+        <li class="entry">
+          <span class="when">Mail</span>
+          <div class="what"><h3>prenom.nom@exemple.fr</h3></div>
+          <a class="btn" href="mailto:prenom.nom@exemple.fr">Écrire</a>
+        </li>
+        <li class="entry">
+          <span class="when">GitHub</span>
+          <div class="what"><h3>antoooin</h3></div>
+          <a class="btn" href="https://github.com/antoooin">Voir</a>
+        </li>
+      </ul>
+    </section>
+
   </main>
+
+  <footer class="site-footer">
+    <span>antoooin.github.io · en construction</span>
+    <span>Dernière mise à jour : 2026</span>
+  </footer>
 
 </body>
 </html>
